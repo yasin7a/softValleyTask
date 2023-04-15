@@ -7,7 +7,7 @@ const Logo = ({ className }: { className: string }) => {
   return (
     <div className={className}>
       <Link href={"/"}>
-        <Image src={logo} alt="Logo-soft-valley" />
+        <Image src={logo} alt="Logo-soft-valley" placeholder="blur" />
       </Link>
     </div>
   );
