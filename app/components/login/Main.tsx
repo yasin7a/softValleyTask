@@ -18,7 +18,7 @@ const LoginSchema = Yup.object().shape({
 
 export type LoginType = { email: string; password: string };
 let intVal: LoginType = { email: "admin@example.com", password: "" };
-const LoginMain = () => {
+const Main = () => {
   let router = useRouter();
   let { isSuccess, mutateAsync } = useLogin();
   let onSubmit = async (
@@ -79,4 +79,4 @@ const LoginMain = () => {
   );
 };
 
-export default LoginMain;
+export default Main;

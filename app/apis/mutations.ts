@@ -1,4 +1,4 @@
-import { LoginType } from "@/components/login/LoginMain";
+import { LoginType } from "@/components/login/Main";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 

@@ -1,4 +1,4 @@
-import LoginMain from "@/components/login/LoginMain";
+import Main from "@/components/login/Main";
 import Head from "next/head";
 
 const Login = () => {
@@ -8,7 +8,7 @@ const Login = () => {
         <title>CRM | Login</title>
       </Head>
 
-      <LoginMain />
+      <Main />
     </>
   );
 };
