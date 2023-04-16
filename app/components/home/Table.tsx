@@ -5,20 +5,27 @@ import Search_Icon from "@/svgIcon/Search_Icon";
 import Image from "next/image";
 import React, { memo, useState } from "react";
 import DateRangePicker from "rsuite/DateRangePicker";
-import avatar_img from "../../public/img_avatar.png";
+import { useGetSource, useGetStatus, useList } from "@/apis/qurery_mutations";
+import Loader from "../Loader";
 
 interface Item {
   id: number;
-  leads: string;
+  name: string;
   phone: string;
   followup_date: string;
-  last_note: string;
-  assigned: any[];
+  lead_notes: any[];
+  lead_assignees: any[];
   email: string;
-  preferred_countries: string;
-  status: string;
-  source: string;
-  action: boolean;
+  country: {
+    name: string;
+  };
+  lead_status: {
+    name: string;
+    color: string;
+  };
+  source: {
+    name: string;
+  };
 }
 
 let tableHead = [
@@ -35,34 +42,11 @@ let tableHead = [
 ];
 
 let Table = () => {
-  const [items, setItems] = useState<Item[]>([
-    {
-      id: 1,
-      leads: "yujtyut",
-      phone: "015464564",
-      followup_date: "-",
-      last_note: "no notes created",
-      assigned: [avatar_img, avatar_img],
-      email: "cfd@gmail.com",
-      preferred_countries: "Banglades",
-      status: "new",
-      source: "Facebook",
-      action: true,
-    },
-    {
-      id: 2,
-      leads: "yujtyut",
-      phone: "015464564",
-      followup_date: "-",
-      last_note: "no notes created",
-      assigned: [avatar_img],
-      email: "cfd@gmail.com",
-      preferred_countries: "Banglades",
-      status: "new",
-      source: "Facebook",
-      action: true,
-    },
-  ]);
+  // let { data: datastatus } = useGetStatus();
+  // let { data: dataSource } = useGetSource();
+  // console.log(dataSource, datastatus);
+
+  let { data: items, isLoading } = useList(null);
 
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
@@ -70,7 +54,7 @@ let Table = () => {
     if (selectedItems.length === items.length) {
       setSelectedItems([]);
     } else {
-      setSelectedItems(items.map((item) => item.id));
+      setSelectedItems(items.map((item: { id: any }) => item.id));
     }
   };
 
@@ -81,6 +65,7 @@ let Table = () => {
       setSelectedItems([...selectedItems, itemId]);
     }
   };
+
   return (
     <>
       <div className="py-4 px-4 bg-gray-100">
@@ -148,100 +133,123 @@ let Table = () => {
             </button>
           </div>
         </div>
-
-        <div className="flex flex-col">
-          <table className=" divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                {tableHead.map((item, i) => (
-                  <th
-                    key={i}
-                    scope="col"
-                    className={`px-6 py-3 text-left text-xs font-medium  text-gray-600 tracking-wider `}
-                  >
-                    <div
-                      className={`${
-                        item === tableHead[0] ? "flex gap-8 items-center" : ""
-                      } `}
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <div className="flex flex-col">
+            <table className=" divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  {tableHead.map((item, i) => (
+                    <th
+                      key={i}
+                      scope="col"
+                      className={`px-6 py-3 text-left text-xs font-medium  text-gray-600 tracking-wider `}
                     >
-                      {item === tableHead[0] && (
-                        <input type="checkbox" onChange={handleSelectAll} />
-                      )}
-                      <span>{item}</span>
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {items.map((item) => (
-                <tr key={item.id}>
-                  <td className="px-6 py-4  text-xs text-gray-500 ">
-                    <div className="flex gap-8 items-center">
-                      <input
-                        type="checkbox"
-                        checked={selectedItems.includes(item.id)}
-                        onChange={() => handleSelectItem(item.id)}
-                      />
-                      <span>{item.leads}</span>
-                    </div>
-                  </td>
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.phone}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.followup_date}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500 ">
-                    <div className="flex gap-8 items-center">
-                      <span> {item.last_note}</span>
-                      <button className="w-5 h-6 hover:opacity-90">
-                        <Edit_Icon />
-                      </button>
-                    </div>
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.assigned.map((item, i) => (
                       <span
-                        className="w-9 h-9 -mr-2 inline-block rounded-full overflow-hidden border-4 border-white"
-                        key={i}
+                        className={`${
+                          item === tableHead[0] ? "flex gap-8 items-center" : ""
+                        } `}
                       >
-                        <Image src={item} alt="avatar" />
+                        {item === tableHead[0] && (
+                          <input type="checkbox" onChange={handleSelectAll} />
+                        )}
+                        <span>{item}</span>
                       </span>
-                    ))}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.email}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.preferred_countries}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-blue-500">
-                    {item.status}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.source}
-                  </td>{" "}
-                  <td className="px-6 py-4  text-xs text-gray-500">
-                    {item.action && (
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+
+              <tbody className="bg-white divide-y divide-gray-200">
+                {items.map((item: Item) => (
+                  <tr key={item.id}>
+                    <td className="px-6 py-4  text-xs text-gray-500 ">
+                      <span className="flex gap-8 items-center">
+                        <input
+                          type="checkbox"
+                          checked={selectedItems.includes(item.id)}
+                          onChange={() => handleSelectItem(item.id)}
+                        />
+                        <span>{item.name}</span>
+                      </span>
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
+                      {item.phone}
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
+                      {item.followup_date || "-"}
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500 ">
+                      <span className="flex gap-8 items-center">
+                        {item?.lead_notes.length > 0 ? (
+                          <>
+                            <span>{item?.lead_notes[0].note}</span>
+                            <button className="w-5 h-6 hover:opacity-90">
+                              <Edit_Icon />
+                            </button>
+                          </>
+                        ) : (
+                          "-"
+                        )}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
+                      {item.lead_assignees.map((item) => (
+                        <span
+                          className="w-9 h-9 -mr-2 inline-block rounded-full overflow-hidden border-4 border-white"
+                          key={item?.id}
+                        >
+                          <Image
+                            src={
+                              "https://crm.softvalley.sveducrm.com/" +
+                              item?.image
+                            }
+                            alt=""
+                            width={120}
+                            height={120}
+                            className="bg-gray-300"
+                          />
+                        </span>
+                      ))}
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
+                      {item.email || "-"}
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
+                      {item?.country ? item?.country.name : "-"}
+                    </td>
+                    <td className="px-6 py-4  text-xs text-blue-500">
+                      <span
+                        style={{
+                          color: item.lead_status.color,
+                        }}
+                      >
+                        {item.lead_status.name}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
+                      {item.source.name}
+                    </td>
+                    <td className="px-6 py-4  text-xs text-gray-500">
                       <span className="flex gap-3 items-center">
                         <button className="w-5 h-6 hover:opacity-90">
                           <Aanalytics_Icon />
-                        </button>{" "}
+                        </button>
                         <button className="w-5 h-6 hover:opacity-90">
                           <Edit_Icon />
-                        </button>{" "}
+                        </button>
                         <button className="w-5 h-6 hover:opacity-90">
                           <Delete_Icon />
                         </button>
                       </span>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );

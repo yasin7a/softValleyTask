@@ -5,7 +5,7 @@ import Logo from "../Logo";
 import InputError from "./InputError";
 import InputField from "./InputField";
 import InputLabel from "./InputLabel";
-import { useLogin } from "@/apis/mutations";
+import { useLogin } from "@/apis/qurery_mutations";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/router";
 const LoginSchema = Yup.object().shape({
