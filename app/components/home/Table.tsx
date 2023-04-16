@@ -5,8 +5,16 @@ import Search_Icon from "@/svgIcon/Search_Icon";
 import Image from "next/image";
 import React, { memo, useState } from "react";
 import DateRangePicker from "rsuite/DateRangePicker";
-import { useGetSource, useGetStatus, useList } from "@/apis/qurery_mutations";
+import {
+  useGetAssign,
+  useGetSource,
+  useGetStatus,
+  useList,
+} from "@/apis/qurery_mutations";
 import Loader from "../Loader";
+import { useQueryClient } from "@tanstack/react-query";
+import useThrottle from "react-use/lib/useThrottle";
+import { useDebounce } from "react-use";
 
 interface Item {
   id: number;
@@ -42,11 +50,13 @@ let tableHead = [
 ];
 
 let Table = () => {
-  // let { data: datastatus } = useGetStatus();
-  // let { data: dataSource } = useGetSource();
-  // console.log(dataSource, datastatus);
-
-  let { data: items, isLoading } = useList(null);
+  let { data: datastatus, isLoading: isloadStatus } = useGetStatus();
+  let { data: dataSource, isLoading: isloadSource } = useGetSource();
+  let { data: dataAssign, isLoading: isloadAssign } = useGetAssign();
+  const queryClient = useQueryClient();
+  const [query, setQuery] = useState("");
+  const [debouncedValue, setDebouncedValue] = React.useState("");
+  let { data: items, isLoading } = useList({ search: query }, debouncedValue);
 
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
@@ -65,6 +75,18 @@ let Table = () => {
       setSelectedItems([...selectedItems, itemId]);
     }
   };
+  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+    setQuery(event.target.value);
+  }
+  useDebounce(
+    () => {
+      queryClient.invalidateQueries(["Lead_list"]);
+      setDebouncedValue(query);
+    },
+    1000,
+    [query]
+  );
+  console.log(datastatus);
 
   return (
     <>
@@ -72,6 +94,8 @@ let Table = () => {
         <div className="flex justify-end items-center relative max-w-[15rem]">
           <input
             type="text"
+            value={query}
+            onChange={handleSearch}
             className="w-full bg-transparent px-3 py-1 focus:outline-none border border-gray-400 rounded-md focus:ring-2 ring-gray-600 focus:border-transparent"
             placeholder="Search in Lead Table..."
           />
@@ -89,30 +113,42 @@ let Table = () => {
           <div>
             <div className="select w-full relative">
               <select className="w-full appearance-none text-gray-500/80 border border-[#e5e5ea] px-1 py-[7px] rounded-md bg-white cursor-pointer text-sm font-normal">
-                <option selected disabled>
-                  Statuses
+                <option value="">
+                  {isloadStatus ? "loadaing..." : "Statuses"}
                 </option>
-                <option value="pdf">PDF</option>
+                {datastatus?.map((status: { id: number; name: string }) => (
+                  <option key={status.id} value={status.name}>
+                    {status.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
           <div>
             <div className="select w-full relative">
               <select className="w-full appearance-none text-gray-500/80 border border-[#e5e5ea] px-1 py-[7px] rounded-md bg-white cursor-pointer text-sm font-normal">
-                <option selected disabled>
-                  Sourses
+                <option value="">
+                  {isloadSource ? "loadain..." : "Sources"}
                 </option>
-                <option value="pdf">PDF</option>
+                {dataSource?.map((status: { id: number; name: string }) => (
+                  <option key={status.id} value={status.name}>
+                    {status.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
           <div>
             <div className="select w-full relative">
               <select className="w-full appearance-none text-gray-500/80 border border-[#e5e5ea] px-1 py-[7px] rounded-md bg-white cursor-pointer text-sm font-normal">
-                <option selected disabled>
-                  Assingnees
+                <option value="">
+                  {isloadAssign ? "loadaing..." : "Assignees"}
                 </option>
-                <option value="pdf">PDF</option>
+                {dataAssign?.map((status: { id: number; name: string }) => (
+                  <option key={status.id} value={status.name}>
+                    {status.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>
@@ -135,7 +171,7 @@ let Table = () => {
         </div>
         {isLoading ? (
           <Loader />
-        ) : (
+        ) : items.length > 0 ? (
           <div className="flex flex-col">
             <table className=" divide-y divide-gray-200">
               <thead className="bg-gray-50">
@@ -249,6 +285,10 @@ let Table = () => {
               </tbody>
             </table>
           </div>
+        ) : (
+          <p className="text-center text-gray-700 text-xl py-8">
+            Oops! No content
+          </p>
         )}
       </div>
     </>
