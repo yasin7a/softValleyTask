@@ -6,9 +6,47 @@ body {
   background: #fff;
 }
 
+.select::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  right: 5px;
+  display: inline-block;
+  height: 0;
+  width: 0;
+  border-color: rgb(150, 150, 150) transparent transparent transparent;
+  border-style: solid;
+  border-width: 0.3em 0.3em 0 0.3em;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  pointer-events: none;
+}
+.rs-btn-primary {
+	background-color: #3498ff;
+}
+
+
+.rs-picker-default:not(.rs-picker-disabled) .rs-btn:hover, .rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle:hover, .rs-picker-default:not(.rs-picker-disabled) .rs-btn:focus, .rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle:focus, .rs-picker-default:not(.rs-picker-disabled) .rs-btn-active, .rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle-active {
+	border-color: #e5e5ea;
+}
+
+
+.rs-btn:focus-visible {
+	outline: none;
+}
+.rs-picker-toggle-active, .rs-picker.rs-picker-focused {
+
+	box-shadow: none;
+}
+
+
 @layer components {
   .login-btn {
     @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none
       disabled:cursor-not-allowed disabled:opacity-90 enabled:active:scale-90 transition-transform enabled:hover:opacity-90 w-full;
+  }
+  select option {
+    @apply text-gray-500;
   }
 }

@@ -18,7 +18,7 @@ const Sidebar = ({
       <div
         className={`${
           toggleNav ? "block" : "hidden"
-        } fixed bg-black/50 inset-0 z-[1] block lg:hidden`}
+        } fixed bg-black/50 inset-0 z-10 block lg:hidden`}
         onClick={handleNavClick}
       ></div>
 
@@ -38,7 +38,7 @@ const Sidebar = ({
           </div>
           <div>
             <h5 className="text-sm text-gray-500">Hello! Good evening</h5>
-            <h3 className="text-md text-gray-600">Admin</h3>
+            <h3 className="text-md text-gray-600 leading-snug">Admin</h3>
           </div>
         </div>
 
