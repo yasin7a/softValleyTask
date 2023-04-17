@@ -60,12 +60,15 @@ let Table = () => {
         <SearchArea query={query} handleSearch={handleSearch} />
       </div>
       <div className="overflow-hidden">
-
-      <div className=" overflow-auto min-w-[20rem]">
-        <FilterArea resetFilter={resetFilter} onSubmit={onSubmit} />
-        <TableRow isLoading={isLoading} isError={isError} items={items} />
-        <TablePagination />
-      </div>
+        <div className=" overflow-auto min-w-[20rem]">
+          <FilterArea resetFilter={resetFilter} onSubmit={onSubmit} />
+          <TableRow
+            isLoading={isLoading}
+            isError={isError}
+            items={items?.data}
+          />
+          {isLoading || isError ? "" : <TablePagination items={items} />}
+        </div>
       </div>
     </>
   );

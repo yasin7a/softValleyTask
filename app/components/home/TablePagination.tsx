@@ -21,7 +21,7 @@ let ButtonIcon = ({
     <span className={`inline-block w-6 h-6 ${className}`}>{children}</span>
   </button>
 );
-let Select = ({ label }: { label: string }) => (
+let Select = ({ label, data }: { label: string; data: any[] }) => (
   <div className="select min-w-[5rem] relative">
     <label
       htmlFor="selcte"
@@ -33,22 +33,37 @@ let Select = ({ label }: { label: string }) => (
       id="selcte"
       className="w-full appearance-none text-gray-500/80 border border-[#e5e5ea]  py-2 rounded-md bg-white cursor-pointer text-sm font-normal px-2"
     >
-      <option value={"10"}>10</option>
+      {data?.map((item) => {
+        return (
+          <option key={item} value={item}>
+            {item}
+          </option>
+        );
+      })}
     </select>
   </div>
 );
-const TablePagination = () => {
+
+const TablePagination = ({ items }: { items: any }) => {
   let handleClick = () => {};
+  console.log(items);
+  const pages = Array.from({ length: items?.last_page }, (_, i) => i + 1);
+  const jumto = generateArray(10, items?.last_page, 10);
+
   return (
     <div className="flex justify-end flex-col sm:flex-row items-center p-2 gap-4 border-t border-gray-200 pt-6">
       <ButtonIcon handleClick={handleClick}>
         <Refresh_Icon />
       </ButtonIcon>
 
-      <Select label="Page" />
+      <Select label="Page" data={pages} />
 
       <div>
-        <p className="text-sm text-gray-500">showing 1-10 of 130 </p>
+        {items?.from && (
+          <p className="text-sm text-gray-500">
+            showing {items?.from}-{items?.to} of {items?.last_page}{" "}
+          </p>
+        )}
       </div>
       <div className="flex justify-end items-center gap-2">
         <ButtonIcon handleClick={handleClick}>
@@ -58,7 +73,7 @@ const TablePagination = () => {
           <LeftArrow_icon />
         </ButtonIcon>
 
-        <Select label="Jump to" />
+        <Select label="Jump to" data={jumto} />
 
         <ButtonIcon handleClick={handleClick}>
           <RightArrow_Icon />
@@ -72,3 +87,12 @@ const TablePagination = () => {
 };
 
 export default TablePagination;
+function generateArray(start: number, end: number, interval: number) {
+  let numbers = [];
+  let currentValue = start;
+  while (currentValue <= end) {
+    numbers.push(currentValue);
+    currentValue += interval;
+  }
+  return numbers;
+}

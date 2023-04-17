@@ -76,6 +76,7 @@ const FilterArea = ({
               <DateRangePicker
                 cleanable={false}
                 showOneCalendar
+                
                 appearance="default"
                 placeholder="Contacted date"
                 className="w-full cursor-pointer z-0 relative"

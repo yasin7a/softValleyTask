@@ -43,7 +43,7 @@ export let useList = (query: string, filter: object) => {
         },
         config
       );
-      return data.data.data;
+      return data.data;
     },
     retry: false,
     refetchOnWindowFocus: false,
