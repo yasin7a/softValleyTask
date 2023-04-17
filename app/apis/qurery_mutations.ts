@@ -31,7 +31,7 @@ export let useList = (query: string, filter: object) => {
       "Access-Control-Allow-Origin": "https://soft-valley-task.vercel.app",
       Authorization: `Bearer ${getCookie("auth")}`,
     },
-    withCredentials: true,
+   
   };
   return useQuery({
     queryKey: ["Lead_list", query, filter],
@@ -58,7 +58,7 @@ export const useGeFilters = (path: string, key: string[]) => {
       "Access-Control-Allow-Origin": "https://soft-valley-task.vercel.app",
       Authorization: `Bearer ${getCookie("auth")}`,
     },
-    withCredentials: true,
+   
   };
   return useQuery({
     queryKey: key,
