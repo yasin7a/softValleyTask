@@ -4,9 +4,9 @@ import axios from "axios";
 import { getCookie } from "cookies-next";
 export type DataPush = {
   search?: string;
-  lead_status_id?: never[];
-  source_id?: never[];
-  user_id?: never[];
+  lead_status_id?: any[];
+  source_id?: any[];
+  user_id?: any[];
   contacted_date_from?: string;
   contacted_date_to?: string;
 };
@@ -26,14 +26,18 @@ export let useLogin = () =>
     mutationFn: async (values: LoginType) => await api.post(`/login`, values),
   });
 
-export let useList = (values: DataPush | undefined | null, query: string) =>
+export let useList = (query: string, filter: object) =>
   useQuery({
-    queryKey: ["Lead_list", query],
+    queryKey: ["Lead_list", query, filter],
     queryFn: async () => {
-      let { data } = await api.post(`/lead/list?page=1&limit=10`, values);
+      let { data } = await api.post(`/lead/list?page=1&limit=10`, {
+        search: query,
+        ...filter,
+      });
       return data.data.data;
     },
     retry: false,
+    refetchOnWindowFocus: false,
   });
 
 export const useGetStatus = () =>
@@ -43,6 +47,7 @@ export const useGetStatus = () =>
       let { data } = await api.get(`/base/lead-status`);
       return data.data;
     },
+    refetchOnWindowFocus: false,
 
     retry: false,
   });
@@ -54,6 +59,7 @@ export const useGetAssign = () =>
       let { data } = await api.get(`/base/assignee`);
       return data.data;
     },
+    refetchOnWindowFocus: false,
 
     retry: false,
   });
@@ -65,5 +71,7 @@ export const useGetSource = () =>
       let { data } = await api.get(`/base/source`);
       return data.data;
     },
+    refetchOnWindowFocus: false,
+
     retry: false,
   });

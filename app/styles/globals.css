@@ -5,6 +5,10 @@
 body {
   background: #fff;
 }
+a,
+a:hover {
+  text-decoration: none;
+}
 
 .select::after {
   content: "";
@@ -22,31 +26,50 @@ body {
   vertical-align: 0.255em;
   pointer-events: none;
 }
+
 .rs-btn-primary {
-	background-color: #3498ff;
+  background-color: #3498ff;
 }
 
-
-.rs-picker-default:not(.rs-picker-disabled) .rs-btn:hover, .rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle:hover, .rs-picker-default:not(.rs-picker-disabled) .rs-btn:focus, .rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle:focus, .rs-picker-default:not(.rs-picker-disabled) .rs-btn-active, .rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle-active {
-	border-color: #e5e5ea;
+.rs-picker-default:not(.rs-picker-disabled) .rs-btn:hover,
+.rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle:hover,
+.rs-picker-default:not(.rs-picker-disabled) .rs-btn:focus,
+.rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle:focus,
+.rs-picker-default:not(.rs-picker-disabled) .rs-btn-active,
+.rs-picker-default:not(.rs-picker-disabled) .rs-picker-toggle-active {
+  border-color: hsl(0, 0%, 70%);
 }
-
 
 .rs-btn:focus-visible {
-	outline: none;
+  outline: none;
 }
-.rs-picker-toggle-active, .rs-picker.rs-picker-focused {
+.rs-picker-toggle-active,
+.rs-picker.rs-picker-focused {
+  transition: none;
 
-	box-shadow: none;
+  box-shadow: 0px 0px 0px 2px #2684ff;
+  border-color: transparent !important;
+}
+.rs-picker-toggle-textbox {
+  transition: none;
+  border: 1px solid hsl(0, 0%, 80%);
+}
+.rs-picker-toggle-textbox:focus {
+  border: 1px solid hsla(0, 0%, 80%, 0);
 }
 
+.rs-picker-default .rs-picker-toggle {
+  color: var(--rs-text-primary);
+  min-height: 38px;
+  border: 1px solid hsl(0, 0%, 80%);
+}
 
 @layer components {
   .login-btn {
     @apply bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none
       disabled:cursor-not-allowed disabled:opacity-90 enabled:active:scale-90 transition-transform enabled:hover:opacity-90 w-full;
   }
-  select option {
-    @apply text-gray-500;
+  .my-react-select-container .my-react-select__indicator-separator {
+    @apply bg-transparent;
   }
 }
