@@ -5,6 +5,6 @@
 - Table search and fully functional filter features 
 - Added JWT token in cookie (as best practice) 
 - Added logout and full-screen functionality 
-- Added fully functional pagination (was in assignment)
+- Added fully functional pagination (was not in assignment but i Did)
 
 
