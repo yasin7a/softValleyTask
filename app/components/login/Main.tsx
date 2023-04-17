@@ -28,9 +28,9 @@ const Main = () => {
     try {
       let { data } = await mutateAsync(values);
       setCookie("auth", data.data.token);
-      router.push("/");
       action.setSubmitting(false);
       action.setStatus("");
+      router.push("/");
     } catch (error: any) {
       action.setStatus(error.response.data.message);
     }

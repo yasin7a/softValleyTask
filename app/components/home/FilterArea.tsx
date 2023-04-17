@@ -1,12 +1,9 @@
-import {
-  useGetAssign,
-  useGetSource,
-  useGetStatus,
-} from "@/apis/qurery_mutations";
+import {  useGeFilters } from "@/apis/qurery_mutations";
 import React, { memo } from "react";
 import MultiSelelct from "../MultiSelelct";
 import { Formik, Form } from "formik";
 import DateRangePicker from "rsuite/DateRangePicker";
+import { getCookie } from "cookies-next";
 
 export type FilterTypes = {
   statuses?: any;
@@ -20,6 +17,7 @@ let intVal: FilterTypes = {
   assignees: [],
   compareDate: [],
 };
+
 const FilterArea = ({
   onSubmit,
   resetFilter,
@@ -27,9 +25,18 @@ const FilterArea = ({
   onSubmit: (values: FilterTypes) => void;
   resetFilter: (resetForm: () => void) => void;
 }) => {
-  let { data: datastatus, isLoading: isloadStatus } = useGetStatus();
-  let { data: dataSource, isLoading: isloadSource } = useGetSource();
-  let { data: dataAssign, isLoading: isloadAssign } = useGetAssign();
+  let { data: datastatus, isLoading: isloadStatus } = useGeFilters(
+    `/base/lead-status`,
+    ["status"]
+  );
+  let { data: dataSource, isLoading: isloadSource } = useGeFilters(
+    `/base/source`,
+    ["source"]
+  );
+  let { data: dataAssign, isLoading: isloadAssign } = useGeFilters(
+    `/base/assignee`,
+    ["assign"]
+  );
   return (
     <Formik initialValues={intVal} onSubmit={onSubmit}>
       {({ resetForm, setFieldValue, setFieldTouched, values }) => (

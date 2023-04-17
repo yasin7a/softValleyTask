@@ -6,6 +6,7 @@ import TableRow from "./TableRow";
 import FilterArea, { FilterTypes } from "./FilterArea";
 import SearchArea from "./SearchArea";
 import TablePagination from "./TablePagination";
+import { getCookie } from "cookies-next";
 
 let Table = () => {
   const queryClient = useQueryClient();
