@@ -59,10 +59,13 @@ let Table = () => {
       <div className="py-4 px-4 bg-gray-100">
         <SearchArea query={query} handleSearch={handleSearch} />
       </div>
+      <div className="overflow-hidden">
+
       <div className=" overflow-auto min-w-[50rem]">
         <FilterArea resetFilter={resetFilter} onSubmit={onSubmit} />
         <TableRow isLoading={isLoading} isError={isError} items={items} />
         <TablePagination />
+      </div>
       </div>
     </>
   );
