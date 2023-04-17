@@ -7,16 +7,16 @@ export function middleware(request: NextRequest) {
   const response = NextResponse.next();
   let cookie = request.cookies.get("auth");
 
-  if (pathredirectAfterAuth.includes(pathname)) {
-    if (cookie) {
-      return NextResponse.redirect(new URL("/", request.url));
-    }
-  }
-  if (pathredirectAfterAuthProtect.includes(pathname)) {
-    if (!cookie) {
-      return NextResponse.redirect(new URL("/login", request.url));
-    }
-  }
+  // if (pathredirectAfterAuth.includes(pathname)) {
+  //   if (cookie) {
+  //     return NextResponse.redirect(new URL("/", request.url));
+  //   }
+  // }
+  // if (pathredirectAfterAuthProtect.includes(pathname)) {
+  //   if (!cookie) {
+  //     return NextResponse.redirect(new URL("/login", request.url));
+  //   }
+  // }
 
   return response;
 }
