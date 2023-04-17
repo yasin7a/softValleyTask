@@ -17,7 +17,7 @@ const LoginSchema = Yup.object().shape({
 });
 
 export type LoginType = { email: string; password: string };
-let intVal: LoginType = { email: "admin@example.com", password: "" };
+let intVal: LoginType = { email: "", password: "" };
 const Main = () => {
   let router = useRouter();
   let { isSuccess, mutateAsync } = useLogin();
