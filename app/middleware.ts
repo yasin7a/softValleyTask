@@ -5,7 +5,7 @@ export function middleware(request: NextRequest) {
   let cookie = request.cookies.get("auth");
 
   if (request.nextUrl.pathname.startsWith("/login") && cookie) {
-    return NextResponse.rewrite(new URL("/about-2", request.url));
+    return NextResponse.rewrite(new URL("/", request.url));
   }
 
   if (request.nextUrl.pathname.startsWith("/") && !cookie) {
