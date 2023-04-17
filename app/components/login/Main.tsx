@@ -27,10 +27,14 @@ const Main = () => {
   ) => {
     try {
       let { data } = await mutateAsync(values);
+      console.log(data);
+      
       setCookie("auth", data.data.token);
       router.push("/");
       action.setStatus("");
     } catch (error: any) {
+      console.log(error);
+      
       action.setStatus(error?.response?.data.message);
     }
   };
