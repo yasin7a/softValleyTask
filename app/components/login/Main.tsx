@@ -28,11 +28,10 @@ const Main = () => {
     try {
       let { data } = await mutateAsync(values);
       setCookie("auth", data.data.token);
-      action.setSubmitting(false);
-      action.setStatus("");
       router.push("/");
+      action.setStatus("");
     } catch (error: any) {
-      action.setStatus(error.response.data.message);
+      action.setStatus(error?.response?.data.message);
     }
   };
   return (

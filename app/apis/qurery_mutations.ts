@@ -15,10 +15,9 @@ export const api = axios.create({
   baseURL: BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "https://soft-valley-task.vercel.app",
-    Authorization: `Bearer ${getCookie("auth")}`,
-
+    "Access-Control-Allow-Origin": "*",
   },
+  withCredentials:true
 });
 
 export let useLogin = () =>
@@ -27,7 +26,13 @@ export let useLogin = () =>
   });
 
 export let useList = (query: string, filter: object) => {
- 
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${getCookie("auth")}`,
+    },
+  };
   return useQuery({
     queryKey: ["Lead_list", query, filter],
     queryFn: async () => {
@@ -36,7 +41,8 @@ export let useList = (query: string, filter: object) => {
         {
           search: query,
           ...filter,
-        }
+        },
+        config
       );
       return data.data.data;
     },
@@ -46,11 +52,17 @@ export let useList = (query: string, filter: object) => {
 };
 
 export const useGeFilters = (path: string, key: string[]) => {
-
+  const config = {
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+      Authorization: `Bearer ${getCookie("auth")}`,
+    },
+  };
   return useQuery({
     queryKey: key,
     queryFn: async () => {
-      let { data } = await api.get(path);
+      let { data } = await api.get(path, config);
       return data.data;
     },
     refetchOnWindowFocus: false,
