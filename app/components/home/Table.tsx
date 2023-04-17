@@ -112,7 +112,7 @@ let Table = () => {
         <SearchArea query={query} handleSearch={handleSearch} />
       </div>
       <div className="overflow-hidden">
-        <div className=" overflow-auto min-w-[20rem]">
+        <div className=" overflow-auto min-w-[20rem] pb-16">
           {/* filter input area using fromik react-select daterange  ======== */}
           <FilterArea resetFilter={resetFilter} onSubmit={onSubmit} />
 
