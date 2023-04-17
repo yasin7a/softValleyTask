@@ -24,16 +24,16 @@ export interface Item {
     name: string;
   };
 }
+
+
 const TableRow = ({
   isLoading,
-
   isError,
-
   items,
 }: {
   isLoading: boolean;
   isError: boolean;
-  items: Item;
+  items: Item[];
 }) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
@@ -65,7 +65,7 @@ const TableRow = ({
             </p>
           ) : items.length > 0 ? (
             <div className="flex flex-col">
-              <table className=" divide-y divide-gray-200">
+              <table className=" divide-y divide-gray-200 ">
                 <thead className="bg-gray-50">
                   <tr>
                     {tableHead.map((item, i) => (
@@ -91,7 +91,7 @@ const TableRow = ({
                   </tr>
                 </thead>
 
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white divide-y divide-gray-200 ">
                   {items.map((item: Item) => (
                     <tr key={item.id}>
                       <td className="px-6 py-4  text-xs text-gray-500 ">
