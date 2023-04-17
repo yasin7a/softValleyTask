@@ -78,7 +78,7 @@ const FilterArea = ({
                 showOneCalendar
                 appearance="default"
                 placeholder="Contacted date"
-                className="w-full cursor-pointer"
+                className="w-full cursor-pointer z-0 relative"
                 placement="bottomEnd"
                 name="compareDate"
                 value={values.compareDate}
