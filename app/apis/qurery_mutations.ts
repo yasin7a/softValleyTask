@@ -13,10 +13,6 @@ export type DataPush = {
 export let BASE_URL = "https://crm.softvalley.sveducrm.com/api/admin";
 export const api = axios.create({
   baseURL: BASE_URL,
-  headers: {
-    "Content-Type": "application/json",
-    "Access-Control-Allow-Origin": "https://soft-valley-task.vercel.app",
-  },
   withCredentials: true,
 });
 
@@ -28,6 +24,8 @@ export let useLogin = () =>
 export let useList = (query: string, filter: object) => {
   const config = {
     headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "https://soft-valley-task.vercel.app",
       Authorization: `Bearer ${getCookie("auth")}`,
     },
   };
@@ -52,6 +50,8 @@ export let useList = (query: string, filter: object) => {
 export const useGeFilters = (path: string, key: string[]) => {
   const config = {
     headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Origin": "https://soft-valley-task.vercel.app",
       Authorization: `Bearer ${getCookie("auth")}`,
     },
   };
