@@ -4,6 +4,9 @@ import RightArrow_Icon from "@/svgIcon/RightArrow_Icon";
 import SkipLeftArrow_Icon from "@/svgIcon/SkipLeftArrow_Icon";
 import SkipRighttArrow_Icon from "@/svgIcon/SkipRighttArrow_Icon";
 import React, { ReactNode } from "react";
+import { Item } from "./TableRow";
+import { ChangeEventType } from "./Table";
+import { paginationType } from "@/apis/qurery_mutations";
 
 let ButtonIcon = ({
   children,
@@ -21,7 +24,17 @@ let ButtonIcon = ({
     <span className={`inline-block w-6 h-6 ${className}`}>{children}</span>
   </button>
 );
-let Select = ({ label, data }: { label: string; data: any[] }) => (
+let Select = ({
+  label,
+  data,
+  handlePagination,
+  pagination,
+}: {
+  pagination: paginationType;
+  label: string;
+  data: any[];
+  handlePagination: (event: ChangeEventType) => void;
+}) => (
   <div className="select min-w-[5rem] relative">
     <label
       htmlFor="selcte"
@@ -29,7 +42,11 @@ let Select = ({ label, data }: { label: string; data: any[] }) => (
     >
       {label}
     </label>
+
     <select
+      value={pagination.page}
+      // @ts-ignore
+      onChange={handlePagination}
       id="selcte"
       className="w-full appearance-none text-gray-500/80 border border-[#e5e5ea]  py-2 rounded-md bg-white cursor-pointer text-sm font-normal px-2"
     >
@@ -44,19 +61,35 @@ let Select = ({ label, data }: { label: string; data: any[] }) => (
   </div>
 );
 
-const TablePagination = ({ items }: { items: any }) => {
+const TablePagination = ({
+  items,
+  handlePagination,
+  pagination,
+  handleResetPagination
+}: {
+  items: any;
+  handlePagination: (event: ChangeEventType) => void;
+  pagination: paginationType;
+  handleResetPagination:()=> void
+}) => {
   let handleClick = () => {};
   console.log(items);
   const pages = Array.from({ length: items?.last_page }, (_, i) => i + 1);
   const jumto = generateArray(10, items?.last_page, 10);
+  console.log(pagination);
 
   return (
     <div className="flex justify-end flex-col sm:flex-row items-center p-2 gap-4 border-t border-gray-200 pt-6">
-      <ButtonIcon handleClick={handleClick}>
+      <ButtonIcon handleClick={handleResetPagination}>
         <Refresh_Icon />
       </ButtonIcon>
 
-      <Select label="Page" data={pages} />
+      <Select
+        label="Page"
+        data={pages}
+        handlePagination={handlePagination}
+        pagination={pagination}
+      />
 
       <div>
         {items?.from && (
@@ -73,7 +106,12 @@ const TablePagination = ({ items }: { items: any }) => {
           <LeftArrow_icon />
         </ButtonIcon>
 
-        <Select label="Jump to" data={jumto} />
+        <Select
+          label="Jump to"
+          data={jumto}
+          handlePagination={handlePagination}
+          pagination={pagination}
+        />
 
         <ButtonIcon handleClick={handleClick}>
           <RightArrow_Icon />

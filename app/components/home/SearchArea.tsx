@@ -1,11 +1,12 @@
 import Search_Icon from "@/svgIcon/Search_Icon";
+import { ChangeEventType } from "./Table";
 
 const SearchArea = ({
   query,
   handleSearch,
 }: {
   query: string;
-  handleSearch: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSearch: (event: ChangeEventType) => void;
 }) => {
   return (
     <div className="flex justify-end items-center relative max-w-[15rem]">

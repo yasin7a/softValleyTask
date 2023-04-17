@@ -19,24 +19,31 @@ export const api = axios.create({
   },
   // withCredentials:true
 });
-
+export type paginationType = {
+  page: number;
+  limit: number;
+};
 export let useLogin = () =>
   useMutation({
     mutationFn: async (values: LoginType) => await api.post(`/login`, values),
   });
 
-export let useList = (query: string, filter: object) => {
+export let useList = (
+  query: string,
+  filter: object,
+  pagination: paginationType
+) => {
   const config = {
     headers: {
-  
       Authorization: `Bearer ${getCookie("auth")}`,
     },
   };
+
   return useQuery({
-    queryKey: ["Lead_list", query, filter],
+    queryKey: ["Lead_list", query, filter, pagination],
     queryFn: async () => {
       let { data } = await api.post(
-        `/lead/list?page=1&limit=10`,
+        `/lead/list?page=${pagination.page}&limit=${pagination.limit}`,
         {
           search: query,
           ...filter,
@@ -53,7 +60,6 @@ export let useList = (query: string, filter: object) => {
 export const useGeFilters = (path: string, key: string[]) => {
   const config = {
     headers: {
-     
       Authorization: `Bearer ${getCookie("auth")}`,
     },
   };

@@ -5,6 +5,7 @@ import Edit_Icon from "@/svgIcon/Edit_Icon";
 import Image from "next/image";
 import Aanalytics_Icon from "@/svgIcon/Aanalytics_Icon";
 import Delete_Icon from "@/svgIcon/Delete_Icon";
+import { ChangeEventType } from "./Table";
 export interface Item {
   id: number;
   name: string;
@@ -37,7 +38,7 @@ const TableRow = ({
 }) => {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
 
-  const handleSelectAll = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSelectAll = (event: ChangeEventType) => {
     if (selectedItems.length === items.length || !event.target.value) {
       setSelectedItems([]);
     } else {

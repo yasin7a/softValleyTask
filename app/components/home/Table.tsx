@@ -6,16 +6,25 @@ import TableRow from "./TableRow";
 import FilterArea, { FilterTypes } from "./FilterArea";
 import SearchArea from "./SearchArea";
 import TablePagination from "./TablePagination";
-import { getCookie } from "cookies-next";
 
+export type ChangeEventType = React.ChangeEvent<HTMLInputElement>;
+let intPagination = {
+  limit: 10,
+  page: 1,
+};
 let Table = () => {
+  const [pagination, setPagination] = useState(intPagination);
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState({} as DataPush);
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  let { data: items, isLoading, isError } = useList(debouncedQuery, filter);
+  let {
+    data: items,
+    isLoading,
+    isError,
+  } = useList(debouncedQuery, filter, pagination);
 
-  function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleSearch(event: ChangeEventType) {
     setQuery(event.target.value);
   }
   useDebounce(
@@ -54,6 +63,15 @@ let Table = () => {
     });
     queryClient.invalidateQueries(["Lead_list"]);
   };
+
+  const handlePagination = (event: ChangeEventType) => {
+    setPagination((prev) => ({ ...prev, page: parseInt(event.target.value) }));
+    queryClient.invalidateQueries(["Lead_list"]);
+  };
+  const handleResetPagination = () => {
+    setPagination(intPagination);
+    queryClient.invalidateQueries(["Lead_list"]);
+  };
   return (
     <>
       <div className="py-4 px-4 bg-gray-100">
@@ -67,7 +85,16 @@ let Table = () => {
             isError={isError}
             items={items?.data}
           />
-          {isLoading || isError ? "" : <TablePagination items={items} />}
+          {isLoading || isError ? (
+            ""
+          ) : (
+            <TablePagination
+              items={items}
+              handleResetPagination={handleResetPagination}
+              handlePagination={handlePagination}
+              pagination={pagination}
+            />
+          )}
         </div>
       </div>
     </>
