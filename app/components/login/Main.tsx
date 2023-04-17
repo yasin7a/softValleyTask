@@ -47,7 +47,7 @@ const Main = () => {
           onSubmit={onSubmit}
         >
           {({ isSubmitting, dirty, status }) => (
-            <Form className="bg-white border mx-2 border-gray-300 rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+            <Form className="bg-white border mx-2 border-gray-300 rounded px-8 pt-6 pb-8 mb-4 flex flex-col w-[25rem]">
               <h1 className="text-2xl font-medium mb-4">Login</h1>
               <div className="mb-2">
                 <InputLabel htmlFor="email" label="Email" />
