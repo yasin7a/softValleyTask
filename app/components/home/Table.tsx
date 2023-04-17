@@ -32,16 +32,24 @@ let Table = () => {
     setQuery("");
   };
   let onSubmit = async (values: FilterTypes) => {
+    let dateRangeObject = {};
     let lead_status_id = values.statuses.map((item: any) => item.id);
     let source_id = values.sources.map((item: any) => item.id);
     let user_id = values.assignees.map((item: any) => item.user_id);
+    let dates = values?.compareDate;
+    if (dates.length > 0) {
+      dateRangeObject = {
+        contacted_date_from: dates[0]?.toISOString(),
+        contacted_date_to: dates[1]?.toISOString(),
+      };
+    }
 
     setQuery("");
     setFilter({
       lead_status_id,
       source_id,
       user_id,
-      ...values.compareDate,
+      ...dateRangeObject,
     });
     queryClient.invalidateQueries(["Lead_list"]);
   };

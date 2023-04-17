@@ -6,7 +6,7 @@ const ValueContainer = ({ children, ...props }: any) => {
 
   if (Array.isArray(values)) {
     const plural = values.length === 1 ? "" : "s";
-    values = `${values.length} item${plural} selected`;
+    values = `${values.length} item${plural}`;
   }
 
   return (

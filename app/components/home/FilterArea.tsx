@@ -12,13 +12,13 @@ export type FilterTypes = {
   statuses?: any;
   sources?: any;
   assignees?: any;
-  compareDate: object;
+  compareDate: any;
 };
 let intVal: FilterTypes = {
-  statuses:[],
-  sources:[],
-  assignees:[],
-  compareDate: {},
+  statuses: [],
+  sources: [],
+  assignees: [],
+  compareDate: [],
 };
 const FilterArea = ({
   onSubmit,
@@ -71,16 +71,10 @@ const FilterArea = ({
                 placeholder="Contacted date"
                 className="w-full cursor-pointer"
                 placement="bottomEnd"
-                onChange={(datesArray: any) => {
-                  if (datesArray?.length > 0) {
-                    const fromDate = datesArray[0]?.toISOString();
-                    const toDate = datesArray[1]?.toISOString();
-                    const dateRangeObject = {
-                      contacted_date_from: fromDate,
-                      contacted_date_to: toDate,
-                    };
-                    setFieldValue("compareDate", dateRangeObject);
-                  }
+                name="compareDate"
+                value={values.compareDate}
+                onChange={(value: any) => {
+                  setFieldValue("compareDate", value);
                 }}
               />
             </div>

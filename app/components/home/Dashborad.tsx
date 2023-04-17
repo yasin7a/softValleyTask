@@ -57,7 +57,7 @@ const Dashborad = ({ handleNavClick }: { handleNavClick: () => void }) => {
             <Menu.Button className=" overflow-hidden shrink-0 w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center">
               <Image src={avatar_img} alt="avatar" />
             </Menu.Button>
-            <Menu.Items className="md:absolute right-0 mt-2 w-56 origin-top-right  rounded-md bg-white   focus:outline-none z-10 border border-gray-300">
+            <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right  rounded-md bg-white   focus:outline-none z-10 border border-gray-300">
               <Menu.Item>
                 <button
                   onClick={logout}
