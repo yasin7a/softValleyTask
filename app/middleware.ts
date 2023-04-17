@@ -1,22 +1,21 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-let pathredirectAfterAuth = ["/login"];
-let pathredirectAfterAuthProtect = ["/"];
+import type { NextRequest } from "next/server"
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const response = NextResponse.next();
   let cookie = request.cookies.get("auth");
 
-  // if (pathredirectAfterAuth.includes(pathname)) {
-  //   if (cookie) {
-  //     return NextResponse.redirect(new URL("/", request.url));
-  //   }
-  // }
-  // if (pathredirectAfterAuthProtect.includes(pathname)) {
-  //   if (!cookie) {
-  //     return NextResponse.redirect(new URL("/login", request.url));
-  //   }
-  // }
+  if (request.nextUrl.pathname.startsWith("/login")) {
+    if (cookie) {
+      return NextResponse.redirect(new URL("/", request.url));
+    }
+  }
+
+  if (request.nextUrl.pathname.startsWith("/")) {
+    if (!cookie) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+  }
 
   return response;
 }
