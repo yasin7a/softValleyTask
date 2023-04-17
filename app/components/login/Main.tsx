@@ -25,9 +25,9 @@ const Main = () => {
     values: LoginType,
     action: FormikHelpers<LoginType>
   ) => {
+    // after successfully login redirect to home page and save token in cookie ========
     try {
       let { data } = await mutateAsync(values);
-
       setCookie("auth", data.data.token);
       router.push("/");
       action.setStatus("");
@@ -36,6 +36,7 @@ const Main = () => {
     }
   };
   return (
+    // login form ========
     <>
       <header>
         <Logo className="w-[10rem] absolute top-0 left-0" />

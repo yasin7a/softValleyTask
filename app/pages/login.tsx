@@ -16,6 +16,9 @@ const Login = () => {
 };
 
 export default Login;
+
+//  check cokkie available or not if has then redirect to home
+
 export async function getServerSideProps({
   req,
   res,

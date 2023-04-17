@@ -4,7 +4,6 @@ import RightArrow_Icon from "@/svgIcon/RightArrow_Icon";
 import SkipLeftArrow_Icon from "@/svgIcon/SkipLeftArrow_Icon";
 import SkipRighttArrow_Icon from "@/svgIcon/SkipRighttArrow_Icon";
 import React, { ReactNode } from "react";
-import { Item } from "./TableRow";
 import { ChangeEventType } from "./Table";
 import { paginationType } from "@/apis/qurery_mutations";
 

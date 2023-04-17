@@ -13,17 +13,20 @@ let intPagination = {
   page: 1,
 };
 let Table = () => {
+  // search, filter and pagination feature
   const [pagination, setPagination] = useState(intPagination);
   const queryClient = useQueryClient();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState({} as DataPush);
   const [debouncedQuery, setDebouncedQuery] = useState("");
+  // admin leads api call ========
   let {
     data: items,
     isLoading,
     isError,
   } = useList(debouncedQuery, filter, pagination);
 
+  //  search and debounce for reduce api call =============
   function handleSearch(event: ChangeEventType) {
     setQuery(event.target.value);
   }
@@ -36,12 +39,21 @@ let Table = () => {
     [query]
   );
 
+  //  reset fillter funtion =============
+
   let resetFilter = (resetForm: () => void) => {
     resetForm();
     setFilter({});
     setQuery("");
   };
+
+  //  submit fillter funtion =============
+
   let onSubmit = async (values: FilterTypes) => {
+    // in here i pass all the all property as requirment
+    // pass id like array
+    // comapred dates from to
+
     let dateRangeObject = {};
     let lead_status_id = values.statuses.map((item: any) => item.id);
     let source_id = values.sources.map((item: any) => item.id);
@@ -64,11 +76,12 @@ let Table = () => {
     queryClient.invalidateQueries(["Lead_list"]);
   };
 
+  // pagintion per page select and jumto funtion
   const handlePagination = (event: ChangeEventType) => {
     setPagination((prev) => ({ ...prev, page: parseInt(event.target.value) }));
     queryClient.invalidateQueries(["Lead_list"]);
   };
-
+  // pagintion skip and and navigation like backward and forrward funtion
   const handlePaginationButton = (
     current_page: number | null,
     last_page: number | null,
@@ -87,23 +100,30 @@ let Table = () => {
     queryClient.invalidateQueries(["Lead_list"]);
   };
 
+  // reset paginaion funtion
   const handleResetPagination = () => {
     setPagination(intPagination);
     queryClient.invalidateQueries(["Lead_list"]);
   };
   return (
     <>
+      {/* search box area ======== */}
       <div className="py-4 px-4 bg-gray-100">
         <SearchArea query={query} handleSearch={handleSearch} />
       </div>
       <div className="overflow-hidden">
         <div className=" overflow-auto min-w-[20rem]">
+          {/* filter input area using fromik react-select daterange  ======== */}
           <FilterArea resetFilter={resetFilter} onSubmit={onSubmit} />
+
+          {/* data from leads admin api ========= */}
           <TableRow
             isLoading={isLoading}
             isError={isError}
             items={items?.data}
           />
+
+          {/* pagination area with all funtionality ========= */}
           {isLoading || isError ? (
             ""
           ) : (

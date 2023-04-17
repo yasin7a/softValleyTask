@@ -9,12 +9,14 @@ import useFullscreen from "react-use/lib/useFullscreen";
 import Hamburger_Icon from "@/svgIcon/Hamburger_Icon";
 import Table from "./Table";
 const Dashborad = ({ handleNavClick }: { handleNavClick: () => void }) => {
+  // full screen feature  ===========
   const ref = useRef(null);
   const [toggle, setToggle] = useState(false);
   const isFullscreen = useFullscreen(ref, toggle, {
     onClose: () => setToggle(false),
   });
 
+  // log out for admin  ===========
   let logout = () => {
     deleteCookie("auth");
     window.open("/login", "_self");
@@ -23,6 +25,8 @@ const Dashborad = ({ handleNavClick }: { handleNavClick: () => void }) => {
   return (
     <div className="lg:ml-[250px] bg-white" ref={ref}>
       <div className="py-3 px-3 sm:px-5 flex justify-between items-center gap-5">
+        {/* hamburger  ============*/}
+
         <div className="flex items-center gap-3">
           {!isFullscreen && (
             <button
@@ -43,6 +47,7 @@ const Dashborad = ({ handleNavClick }: { handleNavClick: () => void }) => {
           </div>
         </div>
 
+        {/* full screen area  ============*/}
         <div className="flex  items-center gap-2">
           <button
             className="text-gray-500 w-8 h-8 flex  items-center justify-center"
@@ -53,6 +58,7 @@ const Dashborad = ({ handleNavClick }: { handleNavClick: () => void }) => {
             </span>
           </button>
 
+          {/* log out area and admin avatar  ============*/}
           <Menu as="div" className="relative inline-block ">
             <Menu.Button className=" overflow-hidden shrink-0 w-8 h-8 bg-gray-200 rounded-full flex justify-center items-center">
               <Image src={avatar_img} alt="avatar" />
@@ -71,6 +77,7 @@ const Dashborad = ({ handleNavClick }: { handleNavClick: () => void }) => {
         </div>
       </div>
 
+      {/* table with search, filter and pagination features ======== */}
       <Table />
     </div>
   );
