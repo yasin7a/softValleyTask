@@ -74,6 +74,7 @@ const FilterArea = ({
             </div>
             <div>
               <DateRangePicker
+                cleanable={false}              
                 appearance="default"
                 placeholder="Contacted date"
                 className="w-full cursor-pointer"
