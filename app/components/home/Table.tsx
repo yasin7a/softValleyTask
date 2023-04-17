@@ -68,6 +68,25 @@ let Table = () => {
     setPagination((prev) => ({ ...prev, page: parseInt(event.target.value) }));
     queryClient.invalidateQueries(["Lead_list"]);
   };
+
+  const handlePaginationButton = (
+    current_page: number | null,
+    last_page: number | null,
+    pageLimit: number | null
+  ) => {
+    // @ts-ignore
+    if (last_page && current_page <= last_page) {
+      // @ts-ignore
+      setPagination((prev) => ({ ...prev, page: prev.page + pageLimit }));
+    }
+    // @ts-ignore
+    if (!last_page && current_page > pageLimit) {
+      // @ts-ignore
+      setPagination((prev) => ({ ...prev, page: prev.page - pageLimit }));
+    }
+    queryClient.invalidateQueries(["Lead_list"]);
+  };
+
   const handleResetPagination = () => {
     setPagination(intPagination);
     queryClient.invalidateQueries(["Lead_list"]);
@@ -93,6 +112,7 @@ let Table = () => {
               handleResetPagination={handleResetPagination}
               handlePagination={handlePagination}
               pagination={pagination}
+              handlePaginationButton={handlePaginationButton}
             />
           )}
         </div>

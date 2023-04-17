@@ -50,6 +50,7 @@ let Select = ({
       id="selcte"
       className="w-full appearance-none text-gray-500/80 border border-[#e5e5ea]  py-2 rounded-md bg-white cursor-pointer text-sm font-normal px-2"
     >
+      {label == "Jump to" && <option value="">0</option>}
       {data?.map((item) => {
         return (
           <option key={item} value={item}>
@@ -65,18 +66,21 @@ const TablePagination = ({
   items,
   handlePagination,
   pagination,
-  handleResetPagination
+  handleResetPagination,
+  handlePaginationButton,
 }: {
   items: any;
   handlePagination: (event: ChangeEventType) => void;
   pagination: paginationType;
-  handleResetPagination:()=> void
+  handleResetPagination: () => void;
+  handlePaginationButton: (
+    current_page: number | null,
+    last_page: number | null,
+    pageLimit: number
+  ) => void;
 }) => {
-  let handleClick = () => {};
-  console.log(items);
   const pages = Array.from({ length: items?.last_page }, (_, i) => i + 1);
   const jumto = generateArray(10, items?.last_page, 10);
-  console.log(pagination);
 
   return (
     <div className="flex justify-end flex-col sm:flex-row items-center p-2 gap-4 border-t border-gray-200 pt-6">
@@ -99,10 +103,18 @@ const TablePagination = ({
         )}
       </div>
       <div className="flex justify-end items-center gap-2">
-        <ButtonIcon handleClick={handleClick}>
+        <ButtonIcon
+          handleClick={() =>
+            handlePaginationButton(items?.current_page, null, 5)
+          }
+        >
           <SkipLeftArrow_Icon />
         </ButtonIcon>
-        <ButtonIcon handleClick={handleClick}>
+        <ButtonIcon
+          handleClick={() =>
+            handlePaginationButton(items?.current_page, null, 1)
+          }
+        >
           <LeftArrow_icon />
         </ButtonIcon>
 
@@ -113,10 +125,14 @@ const TablePagination = ({
           pagination={pagination}
         />
 
-        <ButtonIcon handleClick={handleClick}>
+        <ButtonIcon
+          handleClick={() => handlePaginationButton(null, items?.last_page, 1)}
+        >
           <RightArrow_Icon />
         </ButtonIcon>
-        <ButtonIcon handleClick={handleClick}>
+        <ButtonIcon
+          handleClick={() => handlePaginationButton(null, items?.last_page, 5)}
+        >
           <SkipRighttArrow_Icon />
         </ButtonIcon>
       </div>
