@@ -7,7 +7,7 @@ import InputField from "./InputField";
 import InputLabel from "./InputLabel";
 import { useLogin } from "@/apis/qurery_mutations";
 import { setCookie } from "cookies-next";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 const LoginSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   password: Yup.string()
