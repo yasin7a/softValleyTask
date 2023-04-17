@@ -1,4 +1,6 @@
 import Main from "@/components/login/Main";
+import { getCookie } from "cookies-next";
+import { GetServerSidePropsContext } from "next";
 import Head from "next/head";
 
 const Login = () => {
@@ -14,3 +16,20 @@ const Login = () => {
 };
 
 export default Login;
+export async function getServerSideProps({
+  req,
+  res,
+}: GetServerSidePropsContext) {
+  let token = getCookie("auth", { req, res });
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
+  return { props: {} };
+}
