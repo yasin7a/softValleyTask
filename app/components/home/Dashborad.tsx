@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React, { ReactNode, memo, useRef, useState } from "react";
-import avatar_img from "../../public/img_avatar.png";
+import avatar_img from "../../public/img/img_avatar.png";
 import { deleteCookie } from "cookies-next";
 import { Menu } from "@headlessui/react";
 import FullScreen_off_Icon from "@/svgIcon/FullScreen_off_Icon";
