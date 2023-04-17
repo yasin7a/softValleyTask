@@ -1,20 +1,18 @@
 import React, { ReactNode } from "react";
-
 import Select, { components } from "react-select";
 
 const ValueContainer = ({ children, ...props }: any) => {
-  const { getValue, hasValue } = props;
-  const nbValues = getValue().length;
-  if (!hasValue) {
-    return (
-      <components.ValueContainer {...props}>
-        {children}
-      </components.ValueContainer>
-    );
+  let [values, input] = children;
+
+  if (Array.isArray(values)) {
+    const plural = values.length === 1 ? "" : "s";
+    values = `${values.length} item${plural} selected`;
   }
+
   return (
     <components.ValueContainer {...props}>
-      {`${nbValues} selected`}
+      {values}
+      {input}
     </components.ValueContainer>
   );
 };
@@ -49,6 +47,7 @@ const MultiSelelct = ({
       isSearchable={true}
       placeholder={placeholder}
       id="my-react-select"
+      instanceId={`my-react-select${name}`}
       name={name}
       getOptionValue={getOptionValue}
       getOptionLabel={getOptionLabel}

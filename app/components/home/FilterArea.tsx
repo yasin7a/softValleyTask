@@ -15,9 +15,9 @@ export type FilterTypes = {
   compareDate: object;
 };
 let intVal: FilterTypes = {
-  statuses: "",
-  sources: "",
-  assignees: "",
+  statuses:[],
+  sources:[],
+  assignees:[],
   compareDate: {},
 };
 const FilterArea = ({

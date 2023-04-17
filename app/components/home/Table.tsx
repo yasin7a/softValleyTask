@@ -3,7 +3,7 @@ import { DataPush, useList } from "@/apis/qurery_mutations";
 import { useQueryClient } from "@tanstack/react-query";
 import { useDebounce } from "react-use";
 import TableRow from "./TableRow";
-import FilterArea, { FilterTypes } from "./FIlterArea";
+import FilterArea, { FilterTypes } from "./FilterArea";
 import SearchArea from "./SearchArea";
 import TablePagination from "./TablePagination";
 
@@ -35,7 +35,6 @@ let Table = () => {
     let lead_status_id = values.statuses.map((item: any) => item.id);
     let source_id = values.sources.map((item: any) => item.id);
     let user_id = values.assignees.map((item: any) => item.user_id);
-    console.log(values);
 
     setQuery("");
     setFilter({
