@@ -40,7 +40,7 @@ let Select = ({ label }: { label: string }) => (
 const TablePagination = () => {
   let handleClick = () => {};
   return (
-    <div className="flex justify-end items-center p-2 gap-4 border-t border-gray-200 pt-6">
+    <div className="flex justify-end flex-col sm:flex-row items-center p-2 gap-4 border-t border-gray-200 pt-6">
       <ButtonIcon handleClick={handleClick}>
         <Refresh_Icon />
       </ButtonIcon>
